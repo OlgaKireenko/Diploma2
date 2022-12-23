@@ -1,8 +1,8 @@
 # Diploma
 Дипломная работа по курсу AQA_33
 
-## Перечень автоматизируемых сценариев :  [Тест кейсы тут]([(https://docs.google.com/spreadsheets/d/1LWh1coAMz_B3RbMA1ym3nf8AU5Ls7QBQpc-Mmz1ey38/edit#gid=0)])
-
+## Перечень автоматизируемых сценариев :  [Кейсы тут](https://docs.google.com/spreadsheets/d/1LWh1coAMz_B3RbMA1ym3nf8AU5Ls7QBQpc-Mmz1ey38/edit#gid=0)
+https://docs.google.com/spreadsheets/d/1LWh1coAMz_B3RbMA1ym3nf8AU5Ls7QBQpc-Mmz1ey38/edit#gid=0
 
 # Вопросы:
 надо ли проверять на валидацию другие поля?

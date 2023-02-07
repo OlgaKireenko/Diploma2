@@ -7,7 +7,8 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
 public class BuyTourPage {
-    public SelenideElement buyButton =  $("button").shouldHave(text("Купить"));
+
+    };
 
 
-}
+

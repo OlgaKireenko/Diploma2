@@ -1,4 +1,5 @@
 package ru.netology.test;
+///import lombok.var;
 import ru.netology.page_object.BuyTourPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ class BuyTourTest {
     void shouldSuccessfulBuyTourByCard() {
         $("button").shouldHave(text("Купить")).click();
         $("[placeholder='0000 0000 0000 0000']").setValue (String.valueOf(Data_Helper.getActiveCardNumber()));
-         //$(byText("Владелец")).setValue("FFFFFFFFF");
+         ///$(byText("Владелец")).setValue("FFFFFFFFF");
         $("[placeholder='08']").setValue(String.valueOf(Data_Helper.getValidMonth()));
         $("[placeholder='22']").setValue("25");
         $("[placeholder='999']").setValue("111");

@@ -1,4 +1,4 @@
-package ru.netology.page_object;
+package ru.netology.pageobject;
 
 public class BuyTourWithCreditPage {
 }

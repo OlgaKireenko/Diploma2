@@ -39,6 +39,12 @@ public class DataHelper {
      public static String getValidSurname(){
         return ("Ivanov");
      }
+     public static String getExtraLongCardNumber(){
+        return ("4444 4444 4444 44444444");
+     }
+     public static String getSpecSymbols(){
+        return ("!!$&&");
+     }
 }
 
 

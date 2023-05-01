@@ -8,6 +8,7 @@ import com.codeborne.selenide.commands.ShouldHave;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.netology.data.DataHelper;
 import ru.netology.pageobject.BuyTourPage;
 import ru.netology.pageobject.DashboardPage;
 
@@ -31,11 +32,11 @@ class BuyTourTest {
     void shouldSuccessfulBuyTourByCard() {
 
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putNotActiveCardNumber();
-        buyTourPage.putValidMonth();
-        buyTourPage.putValidYear();
-        buyTourPage.putValidCVV();
-        buyTourPage.putValidOwner();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.getTreeSymbols());
+        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.findSuccessContent();
 
@@ -46,11 +47,11 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour By not valid Card")
     void shouldRejectBuyTourByNotValidCard() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putNotActiveCardNumber();
-        buyTourPage.putValidMonth();
-        buyTourPage.putValidYear();
-        buyTourPage.putValidCVV();
-        buyTourPage.putValidOwner();
+        buyTourPage.putCardNumber(DataHelper.getNonActiveCardNumber());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.findFailMessage();
     }
@@ -60,11 +61,11 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour By With Short Card Number")
     void shouldRejectBuyTourWithShortCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putShortCardNumber();
-        buyTourPage.putValidMonth();
-        buyTourPage.putValidYear();
-        buyTourPage.putValidCVV();
-        buyTourPage.putValidOwner();
+        buyTourPage.putCardNumber(DataHelper.getSpecSymbols());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
     }
@@ -74,10 +75,10 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour With Empty Card Number")
     void shouldRejectBuyTourWithEmptyCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putValidMonth();
-        buyTourPage.putValidYear();
-        buyTourPage.putValidCVV();
-        buyTourPage.putValidOwner();
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
     }
@@ -87,17 +88,19 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour with extra Long Card Number")
     void shouldRejectBuyTourWithExtraLongCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putExtraLongCardNumber();
+        String exLongCardNumber = DataHelper.getExtraLongCardNumber();
+        buyTourPage.putCardNumber(DataHelper.getExtraLongCardNumber());
         buyTourPage.buyClick();
         buyTourPage.shouldCompareCardExtraLong();
         buyTourPage.wrongFormatMessage();
     }
-//6
+
+    //6
     @Test
     @DisplayName("Should reject Buy Tour with Letters in Card Number")
     void shouldRejectBuyTourWithLettersInCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putLettersInCardNumber();
+        buyTourPage.putCardNumber(DataHelper.getTreeLetters());
         buyTourPage.buyClick();
         buyTourPage.shouldCompareCard();
         buyTourPage.wrongFormatMessage();
@@ -108,7 +111,7 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour with Spec Symbols in Card Number")
     void shouldRejectBuyTourWithSpecSymbolsInCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putSpecSymbols();
+        buyTourPage.putCardNumber(DataHelper.getSpecSymbols());
         buyTourPage.buyClick();
         buyTourPage.shouldCompareCard();
         buyTourPage.wrongFormatMessage();
@@ -120,21 +123,22 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour with Not Valid Month")
     void shouldRejectBuyTourWithNotValidMonth() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putActiveCardNumber();
-        buyTourPage.putNotValidMonth();
-        buyTourPage.putValidYear();
-        buyTourPage.putValidCVV();
-        buyTourPage.putValidOwner();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putMonth(DataHelper.getNotValidMonth());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        buyTourPage.findExpiredCardMessage();
     }
-//9
+
+    //9
     @Test
     @DisplayName("Should reject Buy Tour with Not Valid Month(Tree symbols)")
     void shouldRejectBuyTourWithTreeSymbolsInMonth() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putActiveCardNumber();
-        buyTourPage.putTreeSymbolsInMonth();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putMonth(DataHelper.getTreeSymbols());
         buyTourPage.buyClick();
         buyTourPage.shouldCompareMonth();
     }
@@ -144,10 +148,10 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour with Not Valid Month(One symbols)")
     void shouldRejectBuyTourWithOneSymbolInMonth() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putActiveCardNumber();
-        buyTourPage.putTreeSymbolsInMonth();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putMonth(DataHelper.getOneSymbolMonth());
         buyTourPage.buyClick();
-        buyTourPage.shouldCompareMonth();
+        buyTourPage.wrongFormatMessage();
     }
 
     //11
@@ -155,22 +159,71 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour with empty Month field")
     void shouldRejectBuyTourWithEmptyMonthField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putActiveCardNumber();
-        buyTourPage.putValidYear();
-        buyTourPage.putValidCVV();
-        buyTourPage.putValidOwner();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
     }
 
+    //12
 
+    @Test
+    @DisplayName("Should reject Buy Tour with spec Symbols in Month field")
+    void shouldRejectBuyTourWithSpecSymbolsInMonthField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putMonth(DataHelper.getSpecSymbols());
+        buyTourPage.shouldCompareMonthEmpty();
+    }
 
+    //13
+    @Test
+    @DisplayName("Should reject Buy Tour with letters in Month field")
+    void shouldRejectBuyTourWithLettersInMonthField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putMonth(DataHelper.getTreeLetters());
+        buyTourPage.shouldCompareMonthEmpty();
+    }
+    //14
+    @Test
+    @DisplayName("Should reject Buy Tour with expired card")
+    void shouldRejectBuyTourWithExpiredCard() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateSysdateYear());
+        buyTourPage.putMonth(DataHelper.generatePreviousMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.buyClick();
+        buyTourPage.findExpiredCardMessage();
+    }
 
+    //15
 
-
-
-
+    @Test
+    @DisplayName("Should reject Buy Tour with wrong year")
+    void shouldRejectBuyTourWithWrongYearPlus10Years() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateSysdateYearPlusTen());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.buyClick();
+        buyTourPage.findExpiredCardMessage();
+    }
 
 }
+
+
 
 

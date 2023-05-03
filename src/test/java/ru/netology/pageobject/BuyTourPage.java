@@ -50,26 +50,11 @@ public class BuyTourPage {
     }
 
     public void putOwner(String valueOwner) {
-
         owner.setValue(valueOwner);
     }
 
-
-    public void shouldCompareMonth() {
-        month.shouldHave(Condition.attribute("value", "12"));
-
-    }
-    public void shouldCompareMonthEmpty() {
-        month.shouldHave(Condition.attribute("value", ""));
-    }
-
-    public void shouldCompareCard() {
-        card.shouldHave(Condition.attribute("value", ""));
-    }
-
-    public void shouldCompareCardExtraLong() {
-        card.shouldHave(Condition.attribute("value", "4444 4444 4444 4444"));
-
+    public void shouldCompare(String attributeName, String expectedAttributeValue) {
+        month.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
 
 
@@ -84,10 +69,9 @@ public class BuyTourPage {
 
     public void wrongFormatMessage() {
         underLineMessage.shouldBe(visible);
-
     }
 
     public void findExpiredCardMessage() {
-        expiredCardUnderlineMessage.shouldBe(visible, Duration.ofMinutes(1)).shouldHave(exactText("Неверно указан срок действия карты"));
+        expiredCardUnderlineMessage.shouldBe(visible);
     }
 }

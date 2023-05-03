@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class DashboardPage {
     private SelenideElement buyButton = $("button").shouldHave(text("Купить"));
 
-    private SelenideElement buyWithCredit = $("button.button.button_view_extra.button_size_m.button_theme_alfa-on-white");
+    private SelenideElement buyWithCredit = $(byText("Купить в кредит"));
 
 
     public BuyTourPage clickButtonBuy() {
@@ -18,7 +18,7 @@ public class DashboardPage {
         return new BuyTourPage();
     }
 
-    public BuyTourWithCreditPage clickBuyWithCreditButton(){
+    public BuyTourWithCreditPage clickBuyWithCreditButton() {
         buyWithCredit.click();
         return new BuyTourWithCreditPage();
     }

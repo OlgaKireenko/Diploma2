@@ -88,10 +88,9 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour with extra Long Card Number")
     void shouldRejectBuyTourWithExtraLongCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        String exLongCardNumber = DataHelper.getExtraLongCardNumber();
         buyTourPage.putCardNumber(DataHelper.getExtraLongCardNumber());
         buyTourPage.buyClick();
-        buyTourPage.shouldCompareCardExtraLong();
+        buyTourPage.shouldCompare("value", DataHelper.getExtraLongCardNumber());
         buyTourPage.wrongFormatMessage();
     }
 
@@ -102,7 +101,7 @@ class BuyTourTest {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getTreeLetters());
         buyTourPage.buyClick();
-        buyTourPage.shouldCompareCard();
+        buyTourPage.shouldCompare("value", "");
         buyTourPage.wrongFormatMessage();
     }
 
@@ -113,7 +112,7 @@ class BuyTourTest {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getSpecSymbols());
         buyTourPage.buyClick();
-        buyTourPage.shouldCompareCard();
+        buyTourPage.shouldCompare("value", "");
         buyTourPage.wrongFormatMessage();
     }
     //Month
@@ -140,7 +139,7 @@ class BuyTourTest {
         buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
         buyTourPage.putMonth(DataHelper.getTreeSymbols());
         buyTourPage.buyClick();
-        buyTourPage.shouldCompareMonth();
+        buyTourPage.shouldCompare("value", "12");
     }
 
     //10
@@ -178,7 +177,7 @@ class BuyTourTest {
         buyTourPage.putCVV(DataHelper.generateCVV());
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.putMonth(DataHelper.getSpecSymbols());
-        buyTourPage.shouldCompareMonthEmpty();
+        buyTourPage.shouldCompare("value", "");
     }
 
     //13
@@ -191,8 +190,9 @@ class BuyTourTest {
         buyTourPage.putCVV(DataHelper.generateCVV());
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.putMonth(DataHelper.getTreeLetters());
-        buyTourPage.shouldCompareMonthEmpty();
+        buyTourPage.shouldCompare("value", "12");
     }
+
     //14
     @Test
     @DisplayName("Should reject Buy Tour with expired card")

@@ -27,14 +27,9 @@ public class DataHelper {
     public static String generateSysdateYearPlusTen() {
         return LocalDate.now().plusYears(10).format(DateTimeFormatter.ofPattern("YY"));
     }
-
     public static String generatePreviousMonth() {
-
         return LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MM"));
     }
-
-
-
     public static String getNotValidMonth() {
         return ("24");
     }
@@ -59,13 +54,11 @@ public class DataHelper {
         return ("4444 4444 4444 4442");
     }
 
-//TO DO: Понять как получить CVV:
-
     public static String generateCVV() {
        Faker faker = new Faker();
        return faker.number().digits(3);
     }
-
+//TO DO: имя генерировать по другому
     public static String generateFullName() {
         Faker faker = new Faker(new Locale("eng"));
         String surname = faker.name().fullName();

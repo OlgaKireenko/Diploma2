@@ -60,7 +60,7 @@ public class BuyTourPage {
 
     public void findSuccessContent() {
 
-        finalMessage.shouldBe(visible, Duration.ofMinutes(1)).shouldHave(exactText("Успешно. Операция одобрена банком"));
+        finalMessage.shouldBe(visible, Duration.ofMinutes(1)).shouldHave(exactText("Операция одобрена Банком."));
     }
 
     public void findFailMessage() {

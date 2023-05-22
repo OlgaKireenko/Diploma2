@@ -22,13 +22,14 @@ public class SqlQuery {
     @SneakyThrows
     public static void clearDB() {
         var runner = new QueryRunner();
-        var deleteSQL = "DELETE FROM credit_request_entity;";
+        var deleteSQL = "DELETE FROM public.credit_request_entity;";
+
         try (var connection = getConnection()) {
             runner.execute(connection, deleteSQL);
 
             //to do параметризовать?
-            runner.execute(connection, "DELETE FROM order_entity");
-            runner.execute(connection, "DELETE FROM payment_entity");
+            //runner.execute(connection, "DELETE FROM order_entity");
+            //runner.execute(connection, "DELETE FROM payment_entity");
         }
     }
 

@@ -128,7 +128,7 @@ class BuyTourTest {
         buyTourPage.putCVV(DataHelper.generateCVV());
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
-        buyTourPage.findExpiredCardMessage();
+        buyTourPage.findWrongCardMessage();
     }
 
     //9
@@ -204,7 +204,7 @@ class BuyTourTest {
         buyTourPage.putCVV(DataHelper.generateCVV());
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
-        buyTourPage.findExpiredCardMessage();
+        buyTourPage.findWrongCardMessage();
     }
 
     //15
@@ -219,8 +219,150 @@ class BuyTourTest {
         buyTourPage.putCVV(DataHelper.generateCVV());
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
+        buyTourPage.findWrongCardMessage();
+    }
+
+
+    //16
+    @Test
+    @DisplayName("Should reject Buy Tour with wrong year")
+    void shouldRejectBuyTourWithWrongYearMinus3Years() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateSysdateYearMinusThree());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.buyClick();
         buyTourPage.findExpiredCardMessage();
     }
+
+    //17
+    @Test
+    @DisplayName("Should be impossible to put three symbols in year field")
+    void shouldBeImpossibleToPutThreeSymbolsInYearField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.getTreeSymbols());
+        buyTourPage.buyClick();
+        buyTourPage.shouldCompareYear("value", "12");
+    }
+    //18
+    @Test
+    @DisplayName("Should reject Buy Tour with wrong year")
+    void shouldBeImpossibleToBuyTourWithOneSymbolInYearField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.getOneSymbolMonth());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
+//19
+    @Test
+    @DisplayName("Should reject Buy Tour with spec Symbols in Year field")
+    void shouldRejectBuyTourWithSpecSymbolsInYearField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.getSpecSymbols());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.shouldCompareYear("value", "");
+    }
+
+    //20
+    @Test
+    @DisplayName("Should reject Buy Tour with letters in Year field")
+    void shouldRejectBuyTourWithLettersInYearField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.getTreeLetters());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.shouldCompareYear("value", "");
+    }
+
+    //21
+    @Test
+    @DisplayName("Should reject Buy Tour with empty Year field")
+    void shouldRejectBuyTourWithEmptyYearField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
+
+    //22
+    @Test
+    @DisplayName("Should reject Buy Tour with empty Owner field")
+    void shouldBeImpossibleToBuyTourWithEmptyOwnerField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        //buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.buyClick();
+        buyTourPage.findMustFillInMessage();
+
+    }
+
+    //23Баг
+    @Test
+    @DisplayName("Should be impossible to put 100 symbols in owner field")
+    void shouldBeImpossibleToPutOneHundredSymbolsInOwnerField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.);
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+
+    }
+
+    //24
+    @Test
+    @DisplayName("Should be impossible to put Cyrillic symbols in owner field")
+    void shouldBeImpossibleToPutCyrillicSymbolsInOwnerField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.);
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
+    //25
+    @Test
+    @DisplayName("Should be impossible to put Symbols or Numbers in owner field")
+    void shouldBeImpossibleToPutSpecSymbolsInOwnerField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.getSpecSymbols());
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
+
+
+
+
+
+
+
+
 
 }
 

@@ -10,7 +10,7 @@
 
 1. на локальной машине выполнить команду git clone https://github.com/OlgaKireenko/Diploma2
 2. открыть проект в IntelliJIdea 
-3. стартануть контейнер, для этого в IIDEA открыть файл docker-compose.yml и нажать два зелёных квадратика (docker-compose up)
+3. стартануть контейнер, для этого в IDEA открыть файл docker-compose.yml и нажать два зелёных квадратика (docker-compose up)
 4. зайти в терминал, встать в папку проекта и выполнить команду java -jar aqa-shop.jar (приложение откроется на порту http://localhost:8080)
 5. TODO: написать всё необходимое для старта simulateGate
 

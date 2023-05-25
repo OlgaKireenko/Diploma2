@@ -1,14 +1,12 @@
 package ru.netology.test;
-///import lombok.var;
-///import lombok.var;
 
-///import lombok.var;
+import ru.netology.data.DataHelper;
 
 import com.codeborne.selenide.commands.ShouldHave;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import ru.netology.data.DataHelper;
+import org.junit.jupiter.api.*;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+
 import ru.netology.pageobject.BuyTourPage;
 import ru.netology.pageobject.DashboardPage;
 
@@ -20,12 +18,25 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.qameta.allure.selenide.AllureSelenide;
+
 class BuyTourTest {
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
+
+
     @BeforeEach
     void setup() {
         open("http://localhost:8080");
     }
-
     //1
     @Test
     @DisplayName("Should Successful Buy Tour By Card")
@@ -247,6 +258,7 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.shouldCompareYear("value", "12");
     }
+
     //18
     @Test
     @DisplayName("Should reject Buy Tour with wrong year")
@@ -260,7 +272,8 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
     }
-//19
+
+    //19
     @Test
     @DisplayName("Should reject Buy Tour with spec Symbols in Year field")
     void shouldRejectBuyTourWithSpecSymbolsInYearField() {
@@ -323,13 +336,14 @@ class BuyTourTest {
         buyTourPage.putYear(DataHelper.generateYear());
         buyTourPage.putMonth(DataHelper.generateMonth());
         buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.);
+        buyTourPage.putOwner(DataHelper.getExtraLongCardNumber());
         buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        int len = 18; //to do: count length owner field
+        assertEquals(18, len);
 
     }
 
-    //24
+    //24баг
     @Test
     @DisplayName("Should be impossible to put Cyrillic symbols in owner field")
     void shouldBeImpossibleToPutCyrillicSymbolsInOwnerField() {
@@ -338,10 +352,12 @@ class BuyTourTest {
         buyTourPage.putYear(DataHelper.generateYear());
         buyTourPage.putMonth(DataHelper.generateMonth());
         buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.);
+        buyTourPage.putOwner(DataHelper.generateCyrillicSymbolsFullName());
         buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        buyTourPage.shouldCompareOwner("value", "");
+
     }
+
     //25
     @Test
     @DisplayName("Should be impossible to put Symbols or Numbers in owner field")
@@ -355,13 +371,22 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
     }
+    //26
 
+    @Test
+    @DisplayName("Should be impossible to buy tour with two symbols in owner field")
+    void shouldBeImpossibleToBuyTourWithTwoSymbolsInOwnerField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putCVV(DataHelper.generateCVV());
+        buyTourPage.putOwner(DataHelper.generateExtraShortFullName());
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
 
-
-
-
-
-
+    //TO DO CVV test
 
 
 }

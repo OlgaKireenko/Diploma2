@@ -18,10 +18,10 @@ public class BuyTourWithCreditTest {
         open("http://localhost:8080");
     }
 
-//1
+    //1
     @Test
     @DisplayName("ShouldSuccessfulBuyWthValidCard")
-    void shouldSuccessfulBuyTourWithCredit(){
+    void shouldSuccessfulBuyTourWithCredit() {
         var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
         buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
         buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
@@ -33,20 +33,33 @@ public class BuyTourWithCreditTest {
     }
 
 
+    //2 баг?
+    @Test
+    @DisplayName("ShouldRejectBuyWithNotValidCard")
+    void ShouldRejectBuyWithNotValidCard() {
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getNonActiveCardNumber());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.findFailMessage();
+    }
 
 
     //SQL
-   // @Test
+    // @Test
     //@DisplayName("CheckStatusInDB")
     //void shouldSuccessfulBuyTourByCard() {
-        //var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
-        //SqlQuery.clearDB();
-        //buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
-       // buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
-        //buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
-        //buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
-        //buyTourWithCreditPage.putYear(DataHelper.generateYear());
-        //buyTourWithCreditPage.buyClick();
-        //String res = SqlQuery.getCreditPaymentStatus();
-       // assertEquals("approved", res);    }
+    //var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+    //SqlQuery.clearDB();
+    //buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+    // buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+    //buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+    //buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+    //buyTourWithCreditPage.putYear(DataHelper.generateYear());
+    //buyTourWithCreditPage.buyClick();
+    //String res = SqlQuery.getCreditPaymentStatus();
+    // assertEquals("approved", res);    }
 }

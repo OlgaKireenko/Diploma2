@@ -30,9 +30,6 @@ public class BuyTourPage {
     private static SelenideElement expiredCardErrorMessage = $(byText("Истёк срок действия карты"));
     private SelenideElement mustFillInMessage = $(byText("Поле обязательно для заполнения"));
 
-
-
-
     public void buyClick() {
         buy.click();
     }
@@ -64,6 +61,15 @@ public class BuyTourPage {
         year.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
 
+    public void shouldCompareOwner(String attributeName, String expectedAttributeValue) {
+        owner.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
+    }
+
+    //public int shouldCountLength(String fieldName) {
+
+      //  int lengthOwner =
+    //}
+
 
     public void findSuccessContent() {
 
@@ -81,9 +87,11 @@ public class BuyTourPage {
     public void findWrongCardMessage() {
         wrongPeriodCardUnderlineMessage.shouldBe(visible);
     }
-    public void findExpiredCardMessage(){
+
+    public void findExpiredCardMessage() {
         expiredCardErrorMessage.shouldBe(visible);
     }
+
     public void findMustFillInMessage() {
         mustFillInMessage.shouldBe(visible);
     }

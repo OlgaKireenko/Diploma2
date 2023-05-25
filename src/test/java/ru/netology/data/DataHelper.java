@@ -74,6 +74,20 @@ public class DataHelper {
         return surname;
     }
 
+    public static String generateExtraLongFullName() {
+       String surname = "Ivaaaaaaaaaaaaaaaaaaaaaaaaan Ivaaaaaaaaaaaaaaaaaaaaaaaaaaaaanov";
+        return surname;
+    }
+    public static String generateCyrillicSymbolsFullName() {
+        String surname = "Иван Иванов";
+        return surname;
+    }
+
+    public static String generateExtraShortFullName() {
+        String surname = "I I";
+        return surname;
+    }
+
     public static String getExtraLongCardNumber() {
         return ("4444 4444 4444 44444444");
     }

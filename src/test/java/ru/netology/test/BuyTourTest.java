@@ -386,6 +386,8 @@ class BuyTourTest {
         buyTourPage.wrongFormatMessage();
     }
 
+
+
     //TO DO CVV test
 
 

@@ -32,21 +32,30 @@ docker-compose ps
 Ожидаемый статус контейнеров - UP
 
 - Запускаем SUT командой в терминале:
+
 для MySQL:
+
 java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar
+
 для PostgreSQL:
+
 java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
-Запускаем авто-тесты командой в терминале:
+
+- Запускаем авто-тесты командой в терминале:
 для MySQL:
+
 ./gradlew clean test "-Ddatasource.url=jdbc:mysql://localhost:3306/app"
 для PostgreSQL:
+
 ./gradlew clean test "-Ddatasource.url=jdbc:postgresql://localhost:5432/app"
+
 Дождаться сообщения в терминале, которое будет означать, что приложение успешно запущено:
 
 date time INFO 20036 --- [           main] ru.netology.shop.ShopApplication         : Started ShopApplication in 6.475 seconds (JVM running for 7.201)
+
 Сервис будет доступен в браузере по адресу: http://localhost:8080/
 
-Генерируем отчёт по итогам тестирования с помощью Allure. Отчёт автоматически откроется в браузере с помощью команды в терминале:
+- Генерируем отчёт по итогам тестирования с помощью Allure. Отчёт автоматически откроется в браузере с помощью команды в терминале:
 ./gradlew allureServe
 После генерации и работы с отчётом, останавливаем работу allureServe в терминале сочетанием клавиш CTRL + C и подтверждаем действие в терминале вводом Y.
 

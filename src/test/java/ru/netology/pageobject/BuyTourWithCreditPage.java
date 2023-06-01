@@ -21,6 +21,10 @@ public class BuyTourWithCreditPage {
     private static SelenideElement finalMessage = $(".notification__content");
     private static SelenideElement underLineMessage = $(byText("Неверный формат"));
     private static SelenideElement expiredCardUnderlineMessage = $(byText("Неверно указан срок действия карты"));
+    private static SelenideElement wrongPeriodCardUnderlineMessage = $(byText("Неверно указан срок действия карты"));
+
+    private static SelenideElement expiredCardErrorMessage = $(byText("Истёк срок действия карты"));
+    private SelenideElement mustFillInMessage = $(byText("Поле обязательно для заполнения"));
 
 
     public void buyClick() {
@@ -51,6 +55,18 @@ public class BuyTourWithCreditPage {
         month.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
 
+    public void shouldCompareYear(String attributeName, String expectedAttributeValue) {
+        year.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
+    }
+
+    public void shouldCompareOwner(String attributeName, String expectedAttributeValue) {
+        owner.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
+    }
+
+    public void shouldCompareCardNumber(String attributeName, String expectedAttributeValue) {
+        card.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
+    }
+
 
     public void findSuccessContent() {
 
@@ -66,7 +82,17 @@ public class BuyTourWithCreditPage {
     }
 
     public void findExpiredCardMessage() {
-        expiredCardUnderlineMessage.shouldBe(visible);
+        expiredCardErrorMessage.shouldBe(visible);
+    }
+
+
+    public void findWrongCardMessage() {
+        wrongPeriodCardUnderlineMessage.shouldBe(visible);
+    }
+
+
+    public void findMustFillInMessage() {
+        mustFillInMessage.shouldBe(visible);
     }
 }
 

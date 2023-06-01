@@ -37,6 +37,7 @@ class BuyTourTest {
     void setup() {
         open("http://localhost:8080");
     }
+
     //1
     @Test
     @DisplayName("Should Successful Buy Tour By Card")
@@ -72,7 +73,7 @@ class BuyTourTest {
     @DisplayName("Should reject Buy Tour By With Short Card Number")
     void shouldRejectBuyTourWithShortCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getSpecSymbols());
+        buyTourPage.putCardNumber(DataHelper.getOneSymbolMonth());
         buyTourPage.putMonth(DataHelper.generateMonth());
         buyTourPage.putYear(DataHelper.generateYear());
         buyTourPage.putCVV(DataHelper.generateCVV());
@@ -96,24 +97,20 @@ class BuyTourTest {
 
     //5
     @Test
-    @DisplayName("Should reject Buy Tour with extra Long Card Number")
-    void shouldRejectBuyTourWithExtraLongCardNumber() {
+    @DisplayName("Should be impossible to put extra Long value in Card Number")
+    void ShouldBeImpossibleToPutExtraLongValueInCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getExtraLongCardNumber());
-        buyTourPage.buyClick();
-        buyTourPage.shouldCompare("value", DataHelper.getExtraLongCardNumber());
-        buyTourPage.wrongFormatMessage();
+        buyTourPage.shouldCompareCardNumber("value", "4444 4444 4444 4444");
     }
 
     //6
     @Test
-    @DisplayName("Should reject Buy Tour with Letters in Card Number")
+    @DisplayName("Should be impossible to put Letters in Card Number")
     void shouldRejectBuyTourWithLettersInCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getTreeLetters());
-        buyTourPage.buyClick();
         buyTourPage.shouldCompare("value", "");
-        buyTourPage.wrongFormatMessage();
     }
 
     //7
@@ -122,9 +119,7 @@ class BuyTourTest {
     void shouldRejectBuyTourWithSpecSymbolsInCardNumber() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getSpecSymbols());
-        buyTourPage.buyClick();
         buyTourPage.shouldCompare("value", "");
-        buyTourPage.wrongFormatMessage();
     }
     //Month
     //8
@@ -144,21 +139,22 @@ class BuyTourTest {
 
     //9
     @Test
-    @DisplayName("Should reject Buy Tour with Not Valid Month(Tree symbols)")
+    @DisplayName("Should be impossible to put Tree symbols in Month field")
     void shouldRejectBuyTourWithTreeSymbolsInMonth() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
         buyTourPage.putMonth(DataHelper.getTreeSymbols());
-        buyTourPage.buyClick();
         buyTourPage.shouldCompare("value", "12");
     }
 
     //10
     @Test
-    @DisplayName("Should reject Buy Tour with Not Valid Month(One symbols)")
+    @DisplayName("Should reject Buy Tour with Not Valid Month(One symbol)")
     void shouldRejectBuyTourWithOneSymbolInMonth() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putCVV(DataHelper.getTreeSymbols());
+        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.putMonth(DataHelper.getOneSymbolMonth());
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
@@ -180,28 +176,20 @@ class BuyTourTest {
     //12
 
     @Test
-    @DisplayName("Should reject Buy Tour with spec Symbols in Month field")
+    @DisplayName("Should be impossible to put spec Symbols in Month field")
     void shouldRejectBuyTourWithSpecSymbolsInMonthField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.putMonth(DataHelper.getSpecSymbols());
         buyTourPage.shouldCompare("value", "");
     }
 
     //13
     @Test
-    @DisplayName("Should reject Buy Tour with letters in Month field")
+    @DisplayName("Should be impossible to put letters in Month field")
     void shouldRejectBuyTourWithLettersInMonthField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.putMonth(DataHelper.getTreeLetters());
-        buyTourPage.shouldCompare("value", "12");
+        buyTourPage.shouldCompare("value", "");
     }
 
     //14
@@ -253,9 +241,7 @@ class BuyTourTest {
     @DisplayName("Should be impossible to put three symbols in year field")
     void shouldBeImpossibleToPutThreeSymbolsInYearField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
         buyTourPage.putYear(DataHelper.getTreeSymbols());
-        buyTourPage.buyClick();
         buyTourPage.shouldCompareYear("value", "12");
     }
 
@@ -275,7 +261,7 @@ class BuyTourTest {
 
     //19
     @Test
-    @DisplayName("Should reject Buy Tour with spec Symbols in Year field")
+    @DisplayName("Should be impossible to put spec Symbols in Year field")
     void shouldRejectBuyTourWithSpecSymbolsInYearField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
@@ -288,7 +274,7 @@ class BuyTourTest {
 
     //20
     @Test
-    @DisplayName("Should reject Buy Tour with letters in Year field")
+    @DisplayName("Should be impossible to put letters in Year field")
     void shouldRejectBuyTourWithLettersInYearField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
@@ -358,21 +344,15 @@ class BuyTourTest {
 
     }
 
-    //25
+    //25баг
     @Test
     @DisplayName("Should be impossible to put Symbols or Numbers in owner field")
     void shouldBeImpossibleToPutSpecSymbolsInOwnerField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
         buyTourPage.putOwner(DataHelper.getSpecSymbols());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        buyTourPage.shouldCompareOwner("value","");
     }
-    //26
-
+    //26баг
     @Test
     @DisplayName("Should be impossible to buy tour with two symbols in owner field")
     void shouldBeImpossibleToBuyTourWithTwoSymbolsInOwnerField() {
@@ -385,6 +365,28 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
     }
+    Покупка тура по дебетовой карте, карта активная, поле CVC/CVV оставить пустым
+
+
+
+
+
+
+
+    Покупка тура по дебетовой карте, карта активная, в поле CVC/CVV ввести больше трёх символов
+
+
+
+
+
+
+    Покупка тура по дебетовой карте, карта активная, в поле CVC/CVV ввести меньше трёх символов
+
+
+
+
+
+
 
 
 

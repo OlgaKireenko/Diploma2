@@ -47,32 +47,29 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.findFailMessage();
     }
 
-
     //SQL
-     @Test
+    @Test
     @DisplayName("CheckStatusInDB")
     void shouldSuccessfulBuyTourByCard() {
-    var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
-    //SqlQuery.clearDB();
-    buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
-    buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
-    buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
-    buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
-    buyTourWithCreditPage.putYear(DataHelper.generateYear());
-    buyTourWithCreditPage.buyClick();
-    String res = SqlQuery.getCreditPaymentStatus();
-     assertEquals("approved", res);
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        //SqlQuery.clearDB();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.buyClick();
+        String res = SqlQuery.getCreditPaymentStatus();
+        assertEquals("approved", res);
 
     }
-
-
 
     //3
     @Test
     @DisplayName("Should reject Buy Tour By With Short Card Number")
     void shouldRejectBuyTourWithShortCardNumber() {
         var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
-        buyTourWithCreditPage.putCardNumber(DataHelper.getSpecSymbols());
+        buyTourWithCreditPage.putCardNumber(DataHelper.getTreeSymbols());
         buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
         buyTourWithCreditPage.putYear(DataHelper.generateYear());
         buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
@@ -85,46 +82,40 @@ public class BuyTourWithCreditTest {
     @Test
     @DisplayName("Should reject Buy Tour With Empty Card Number")
     void shouldRejectBuyTourWithEmptyCardNumber() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
     }
 
     //5
     @Test
-    @DisplayName("Should reject Buy Tour with extra Long Card Number")
+    @DisplayName("Should be impossible to put extra Long Card Number")
     void shouldRejectBuyTourWithExtraLongCardNumber() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getExtraLongCardNumber());
-        buyTourPage.buyClick();
-        buyTourPage.shouldCompare("value", DataHelper.getExtraLongCardNumber());
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getExtraLongCardNumber());
+        buyTourWithCreditPage.shouldCompareCardNumber("value", "4444 4444 4444 4444");
     }
 
     //6
     @Test
-    @DisplayName("Should reject Buy Tour with Letters in Card Number")
+    @DisplayName("Should be impossible to put Letters in Card Number")
     void shouldRejectBuyTourWithLettersInCardNumber() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getTreeLetters());
-        buyTourPage.buyClick();
-        buyTourPage.shouldCompare("value", "");
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getTreeLetters());
+        buyTourWithCreditPage.shouldCompareCardNumber("value", "");
     }
 
     //7
     @Test
-    @DisplayName("Should reject Buy Tour with Spec Symbols in Card Number")
+    @DisplayName("Should be impossible to put Spec Symbols in Card Number")
     void shouldRejectBuyTourWithSpecSymbolsInCardNumber() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getSpecSymbols());
-        buyTourPage.buyClick();
-        buyTourPage.shouldCompare("value", "");
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getSpecSymbols());
+        buyTourWithCreditPage.shouldCompareCardNumber("value", "");
     }
     //Month
     //8
@@ -132,90 +123,81 @@ public class BuyTourWithCreditTest {
     @Test
     @DisplayName("Should reject Buy Tour with Not Valid Month")
     void shouldRejectBuyTourWithNotValidMonth() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putMonth(DataHelper.getNotValidMonth());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.findWrongCardMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putMonth(DataHelper.getNotValidMonth());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.findWrongCardMessage();
     }
 
     //9
     @Test
-    @DisplayName("Should reject Buy Tour with Not Valid Month(Tree symbols)")
+    @DisplayName("Should be impossible to put Tree symbols in month field)")
     void shouldRejectBuyTourWithTreeSymbolsInMonth() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putMonth(DataHelper.getTreeSymbols());
-        buyTourPage.buyClick();
-        buyTourPage.shouldCompare("value", "12");
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putMonth(DataHelper.getTreeSymbols());
+        buyTourWithCreditPage.shouldCompare("value", "12");
     }
 
     //10
     @Test
     @DisplayName("Should reject Buy Tour with Not Valid Month(One symbols)")
     void shouldRejectBuyTourWithOneSymbolInMonth() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putMonth(DataHelper.getOneSymbolMonth());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putMonth(DataHelper.getOneSymbolMonth());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
     }
 
     //11
     @Test
     @DisplayName("Should reject Buy Tour with empty Month field")
     void shouldRejectBuyTourWithEmptyMonthField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
     }
 
     //12
 
     @Test
-    @DisplayName("Should reject Buy Tour with spec Symbols in Month field")
+    @DisplayName("Should be impossible to put spec Symbols in Month field")
     void shouldRejectBuyTourWithSpecSymbolsInMonthField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.putMonth(DataHelper.getSpecSymbols());
-        buyTourPage.shouldCompare("value", "");
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putMonth(DataHelper.getSpecSymbols());
+        buyTourWithCreditPage.shouldCompare("value", "");
     }
 
     //13
     @Test
-    @DisplayName("Should reject Buy Tour with letters in Month field")
+    @DisplayName("Should be impossible to put letters in Month field")
     void shouldRejectBuyTourWithLettersInMonthField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.putMonth(DataHelper.getTreeLetters());
-        buyTourPage.shouldCompare("value", "12");
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putMonth(DataHelper.getTreeLetters());
+        buyTourWithCreditPage.shouldCompare("value", "");
     }
 
     //14
     @Test
     @DisplayName("Should reject Buy Tour with expired card")
     void shouldRejectBuyTourWithExpiredCard() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateSysdateYear());
-        buyTourPage.putMonth(DataHelper.generatePreviousMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.findWrongCardMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateSysdateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generatePreviousMonth());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.findWrongCardMessage();
     }
 
     //15
@@ -223,14 +205,14 @@ public class BuyTourWithCreditTest {
     @Test
     @DisplayName("Should reject Buy Tour with wrong year")
     void shouldRejectBuyTourWithWrongYearPlus10Years() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateSysdateYearPlusTen());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.findWrongCardMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateSysdateYearPlusTen());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.findWrongCardMessage();
     }
 
 
@@ -238,92 +220,82 @@ public class BuyTourWithCreditTest {
     @Test
     @DisplayName("Should reject Buy Tour with wrong year")
     void shouldRejectBuyTourWithWrongYearMinus3Years() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateSysdateYearMinusThree());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.findExpiredCardMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateSysdateYearMinusThree());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.findExpiredCardMessage();
     }
 
     //17
     @Test
     @DisplayName("Should be impossible to put three symbols in year field")
     void shouldBeImpossibleToPutThreeSymbolsInYearField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.getTreeSymbols());
-        buyTourPage.buyClick();
-        buyTourPage.shouldCompareYear("value", "12");
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putYear(DataHelper.getTreeSymbols());
+        buyTourWithCreditPage.shouldCompareYear("value", "12");
     }
 
     //18
     @Test
     @DisplayName("Should reject Buy Tour with wrong year")
     void shouldBeImpossibleToBuyTourWithOneSymbolInYearField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.getOneSymbolMonth());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.getOneSymbolMonth());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
     }
 
     //19
     @Test
     @DisplayName("Should reject Buy Tour with spec Symbols in Year field")
     void shouldRejectBuyTourWithSpecSymbolsInYearField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.getSpecSymbols());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.shouldCompareYear("value", "");
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putYear(DataHelper.getSpecSymbols());
+        buyTourWithCreditPage.shouldCompareYear("value", "");
     }
 
     //20
     @Test
     @DisplayName("Should reject Buy Tour with letters in Year field")
     void shouldRejectBuyTourWithLettersInYearField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.getTreeLetters());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.shouldCompareYear("value", "");
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putYear(DataHelper.getTreeLetters());
+        buyTourWithCreditPage.shouldCompareYear("value", "");
     }
 
     //21
     @Test
     @DisplayName("Should reject Buy Tour with empty Year field")
     void shouldRejectBuyTourWithEmptyYearField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
     }
 
     //22
     @Test
     @DisplayName("Should reject Buy Tour with empty Owner field")
     void shouldBeImpossibleToBuyTourWithEmptyOwnerField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        //buyTourPage.putOwner(DataHelper.generateFullName());
-        buyTourPage.buyClick();
-        buyTourPage.findMustFillInMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        //buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.findMustFillInMessage();
 
     }
 
@@ -331,13 +303,13 @@ public class BuyTourWithCreditTest {
     @Test
     @DisplayName("Should be impossible to put 100 symbols in owner field")
     void shouldBeImpossibleToPutOneHundredSymbolsInOwnerField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.getExtraLongCardNumber());
-        buyTourPage.buyClick();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.getExtraLongCardNumber());
+        buyTourWithCreditPage.buyClick();
         int len = 18; //to do: count length owner field
         assertEquals(18, len);
 
@@ -347,42 +319,34 @@ public class BuyTourWithCreditTest {
     @Test
     @DisplayName("Should be impossible to put Cyrillic symbols in owner field")
     void shouldBeImpossibleToPutCyrillicSymbolsInOwnerField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateCyrillicSymbolsFullName());
-        buyTourPage.buyClick();
-        buyTourPage.shouldCompareOwner("value", "");
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putOwner(DataHelper.generateCyrillicSymbolsFullName());
+        buyTourWithCreditPage.shouldCompareOwner("value", "");
 
     }
 
-    //25
+    //25 Баг
     @Test
     @DisplayName("Should be impossible to put Symbols or Numbers in owner field")
     void shouldBeImpossibleToPutSpecSymbolsInOwnerField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.getSpecSymbols());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putOwner(DataHelper.getSpecSymbols());
+        buyTourWithCreditPage.shouldCompareOwner("value","");
     }
-    //26
+    //26баг
 
     @Test
     @DisplayName("Should be impossible to buy tour with two symbols in owner field")
     void shouldBeImpossibleToBuyTourWithTwoSymbolsInOwnerField() {
-        var buyTourPage = new DashboardPage().clickButtonBuy();
-        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourPage.putYear(DataHelper.generateYear());
-        buyTourPage.putMonth(DataHelper.generateMonth());
-        buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.generateExtraShortFullName());
-        buyTourPage.buyClick();
-        buyTourPage.wrongFormatMessage();
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
+        buyTourWithCreditPage.putOwner(DataHelper.generateExtraShortFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
     }
+
+
 }

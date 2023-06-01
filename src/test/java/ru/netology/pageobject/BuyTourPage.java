@@ -64,6 +64,9 @@ public class BuyTourPage {
     public void shouldCompareOwner(String attributeName, String expectedAttributeValue) {
         owner.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
+    public void shouldCompareCardNumber(String attributeName, String expectedAttributeValue) {
+        card.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
+    }
 
     //public int shouldCountLength(String fieldName) {
 

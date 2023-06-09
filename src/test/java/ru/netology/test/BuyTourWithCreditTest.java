@@ -1,10 +1,10 @@
 package ru.netology.test;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
 import ru.netology.sql.SqlQuery;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import ru.netology.pageobject.DashboardPage;
 
 import java.util.function.ToDoubleBiFunction;
@@ -17,10 +17,19 @@ public class BuyTourWithCreditTest {
     void setup() {
         open("http://localhost:8080");
     }
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
 
     //1
     @Test
-    @DisplayName("ShouldSuccessfulBuyWthValidCard")
+    @DisplayName("ShouldSuccessfulBuyWithValidCard")
     void shouldSuccessfulBuyTourWithCredit() {
         var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
         buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
@@ -59,8 +68,8 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
         buyTourWithCreditPage.putYear(DataHelper.generateYear());
         buyTourWithCreditPage.buyClick();
-        String res = SqlQuery.getCreditPaymentStatus();
-        assertEquals("approved", res);
+        String res = SqlQuery.getDebitPaymentStatus();
+        assertEquals("APPROVED", res);
 
     }
 
@@ -347,6 +356,8 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.buyClick();
         buyTourWithCreditPage.wrongFormatMessage();
     }
+
+
 
 
 }

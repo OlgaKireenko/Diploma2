@@ -92,6 +92,10 @@ public class DataHelper {
         return ("4444 4444 4444 44444444");
     }
 
+    public static String getThreeZeros() {
+        return ("000");
+    }
+
     public static String getSpecSymbols() {
         return ("!!$&&");
     }

@@ -67,6 +67,10 @@ public class BuyTourPage {
     public void shouldCompareCardNumber(String attributeName, String expectedAttributeValue) {
         card.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
+    public void shouldCompareCVV(String attributeName, String expectedAttributeValue) {
+        cvv.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
+    }
+
 
     //public int shouldCountLength(String fieldName) {
 
@@ -98,4 +102,16 @@ public class BuyTourPage {
     public void findMustFillInMessage() {
         mustFillInMessage.shouldBe(visible);
     }
+
+
+    public void makeSuccessPaymentByCard(){
+
+    }
+
+    public void makeSuccessPaymentWithCredit(){
+
+    }
+
+
+
 }

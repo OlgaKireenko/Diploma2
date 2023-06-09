@@ -350,8 +350,9 @@ class BuyTourTest {
     void shouldBeImpossibleToPutSpecSymbolsInOwnerField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putOwner(DataHelper.getSpecSymbols());
-        buyTourPage.shouldCompareOwner("value","");
+        buyTourPage.shouldCompareOwner("value", "");
     }
+
     //26баг
     @Test
     @DisplayName("Should be impossible to buy tour with two symbols in owner field")
@@ -365,10 +366,70 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.wrongFormatMessage();
     }
-    
-
 
     //TO DO CVV test
+    @Test
+    @DisplayName("Should be impossible to buy tour with empty CVV field")
+    void shouldBeImpossibleToBuyTourWithEmptyCVVField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
+
+    @Test
+    @DisplayName("Should be impossible to put more than three numbers into the CVV field")
+    void shouldBeImpossibleToPutMoreThanThreeNumInCVVField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putCVV(DataHelper.getExtraLongCardNumber());
+        buyTourPage.shouldCompareCVV("value","444");
+    }
+
+    @Test
+    @DisplayName("Should be impossible to buy tour with one symbol in CVV field")
+    void shouldBeImpossibleToBuyTourWithOneSymbolInCVVField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putCVV(DataHelper.getOneSymbolMonth());
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
+
+    @Test
+    @DisplayName("Should be impossible to buy tour with Three zero in CVV field")
+    void shouldBeImpossibleToBuyTourWithThreeZeroInCVVField() {
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourPage.putYear(DataHelper.generateYear());
+        buyTourPage.putMonth(DataHelper.generateMonth());
+        buyTourPage.putOwner(DataHelper.generateFullName());
+        buyTourPage.putCVV(DataHelper.getThreeZeros());
+        buyTourPage.buyClick();
+        buyTourPage.wrongFormatMessage();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

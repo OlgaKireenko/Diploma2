@@ -36,7 +36,7 @@ public class SqlQuery {
     @SneakyThrows
     public static String getDebitPaymentStatus() {
         var runner = new QueryRunner();
-        var SqlStatus = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
+        var SqlStatus = "SELECT status FROM public.payment_entity ORDER BY created DESC LIMIT 1";
         try (var connection = getConnection()) {
             String result = runner.query(connection, SqlStatus, new ScalarHandler<>());
             return result;

@@ -39,8 +39,9 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.putYear(DataHelper.generateYear());
         buyTourWithCreditPage.buyClick();
         buyTourWithCreditPage.findSuccessContent();
+        String res = SqlQuery.getCreditPaymentStatus();
+        assertEquals("APPROVED", res);
     }
-
 
     //2 баг?
     @Test
@@ -54,24 +55,11 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.putYear(DataHelper.generateYear());
         buyTourWithCreditPage.buyClick();
         buyTourWithCreditPage.findFailMessage();
+        String res = SqlQuery.getCreditPaymentStatus();
+        assertEquals("DECLINED", res);
     }
 
     //SQL
-    @Test
-    @DisplayName("CheckStatusInDB")
-    void shouldSuccessfulBuyTourByCard() {
-        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
-        //SqlQuery.clearDB();
-        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
-        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
-        buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
-        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
-        buyTourWithCreditPage.putYear(DataHelper.generateYear());
-        buyTourWithCreditPage.buyClick();
-        String res = SqlQuery.getDebitPaymentStatus();
-        assertEquals("APPROVED", res);
-
-    }
 
     //3
     @Test

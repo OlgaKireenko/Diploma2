@@ -19,6 +19,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.qameta.allure.selenide.AllureSelenide;
+import ru.netology.sql.SqlQuery;
 
 class BuyTourTest {
 
@@ -51,6 +52,8 @@ class BuyTourTest {
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.findSuccessContent();
+        String res = SqlQuery.getDebitPaymentStatus();
+        assertEquals("APPROVED", res);
 
     }
 
@@ -66,6 +69,8 @@ class BuyTourTest {
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.findFailMessage();
+        String res = SqlQuery.getDebitPaymentStatus();
+        assertEquals("DECLINED", res);
     }
 
     //3

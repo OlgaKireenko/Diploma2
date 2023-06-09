@@ -72,12 +72,6 @@ public class BuyTourPage {
     }
 
 
-    //public int shouldCountLength(String fieldName) {
-
-      //  int lengthOwner =
-    //}
-
-
     public void findSuccessContent() {
 
         finalMessage.shouldBe(visible, Duration.ofMinutes(1)).shouldHave(exactText("Операция одобрена Банком."));
@@ -104,7 +98,7 @@ public class BuyTourPage {
     }
 
 
-    public void makeSuccessPaymentByCard(){
+    public void makeSuccessPaymentByDebitCard(){
 
     }
 

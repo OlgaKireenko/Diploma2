@@ -22,21 +22,17 @@ public class SqlQuery {
     @SneakyThrows
     public static void clearDB() {
         var runner = new QueryRunner();
-        var deleteSQL = "DELETE FROM public.credit_request_entity;";
+        var deleteSQL = "DELETE FROM credit_request_entity;";
 
         try (var connection = getConnection()) {
             runner.execute(connection, deleteSQL);
-
-            //to do параметризовать?
-            //runner.execute(connection, "DELETE FROM order_entity");
-            //runner.execute(connection, "DELETE FROM payment_entity");
         }
     }
 
     @SneakyThrows
     public static String getDebitPaymentStatus() {
         var runner = new QueryRunner();
-        var SqlStatus = "SELECT status FROM public.payment_entity ORDER BY created DESC LIMIT 1";
+        var SqlStatus = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var connection = getConnection()) {
             String result = runner.query(connection, SqlStatus, new ScalarHandler<>());
             return result;

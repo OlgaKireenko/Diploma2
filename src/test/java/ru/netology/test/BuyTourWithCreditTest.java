@@ -17,6 +17,7 @@ public class BuyTourWithCreditTest {
     void setup() {
         open("http://localhost:8080");
     }
+
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -58,8 +59,6 @@ public class BuyTourWithCreditTest {
         String res = SqlQuery.getCreditPaymentStatus();
         assertEquals("DECLINED", res);
     }
-
-    //SQL
 
     //3
     @Test
@@ -200,7 +199,7 @@ public class BuyTourWithCreditTest {
     //15
 
     @Test
-    @DisplayName("Should reject Buy Tour with wrong year")
+    @DisplayName("Should reject Buy Tour with plus ten to sysdate in year field")
     void shouldRejectBuyTourWithWrongYearPlus10Years() {
         var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
         buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
@@ -215,7 +214,7 @@ public class BuyTourWithCreditTest {
 
     //16
     @Test
-    @DisplayName("Should reject Buy Tour with wrong year")
+    @DisplayName("Should reject Buy Tour with minus three from sysdate year")
     void shouldRejectBuyTourWithWrongYearMinus3Years() {
         var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
         buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
@@ -238,7 +237,7 @@ public class BuyTourWithCreditTest {
 
     //18
     @Test
-    @DisplayName("Should reject Buy Tour with wrong year")
+    @DisplayName("Should reject Buy Tour with one symbol in year field")
     void shouldBeImpossibleToBuyTourWithOneSymbolInYearField() {
         var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
         buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
@@ -305,10 +304,9 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.putYear(DataHelper.generateYear());
         buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
         buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
-        buyTourWithCreditPage.putOwner(DataHelper.getExtraLongCardNumber());
+        buyTourWithCreditPage.putOwner(DataHelper.generateExtraLongFullName());
         buyTourWithCreditPage.buyClick();
-        int len = 18; //to do: count length owner field
-        assertEquals(18, len);
+        buyTourWithCreditPage.shouldCompareOwner("value", "Ivaaaaaaaaaaaaaaaa");
 
     }
 
@@ -328,7 +326,7 @@ public class BuyTourWithCreditTest {
     void shouldBeImpossibleToPutSpecSymbolsInOwnerField() {
         var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
         buyTourWithCreditPage.putOwner(DataHelper.getSpecSymbols());
-        buyTourWithCreditPage.shouldCompareOwner("value","");
+        buyTourWithCreditPage.shouldCompareOwner("value", "");
     }
     //26баг
 
@@ -345,7 +343,71 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.wrongFormatMessage();
     }
 
+    //27
+    @Test
+    @DisplayName("Should be impossible to buy tour with empty CVV field")
+    void shouldBeImpossibleToBuyTourWithEmptyCVVField() {
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
+    }
 
+    //28
+    @Test
+    @DisplayName("Should be impossible to put more than three numbers into the CVV field")
+    void shouldBeImpossibleToPutMoreThanThreeNumInCVVField() {
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.putCVV(DataHelper.getExtraLongCardNumber());
+        buyTourWithCreditPage.shouldCompareCVV("value", "444");
+    }
+
+    //29
+    @Test
+    @DisplayName("Should be impossible to buy tour with one symbol in CVV field")
+    void shouldBeImpossibleToBuyTourWithOneSymbolInCVVField() {
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.putCVV(DataHelper.getOneSymbolMonth());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
+    }
+
+    //30
+    ///баг
+    @Test
+    @DisplayName("Should be impossible to buy tour with Three zero in CVV field")
+    void shouldBeImpossibleToBuyTourWithThreeZeroInCVVField() {
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.putCardNumber(DataHelper.getActiveCardNumber());
+        buyTourWithCreditPage.putYear(DataHelper.generateYear());
+        buyTourWithCreditPage.putMonth(DataHelper.generateMonth());
+        buyTourWithCreditPage.putOwner(DataHelper.generateFullName());
+        buyTourWithCreditPage.putCVV(DataHelper.getThreeZeros());
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.wrongFormatMessage();
+    }
+    
+    //31
+    @Test
+    @DisplayName("Error underlines Should disappear after filing form")
+    void ErrorUnderLinesShouldDisappear() {
+        var buyTourWithCreditPage = new DashboardPage().clickBuyWithCreditButton();
+        buyTourWithCreditPage.buyClick();
+        buyTourWithCreditPage.makeSuccessPaymentByDebitCard();
+        buyTourWithCreditPage.wrongFormatMessageShouldNotBeVisible();
+        buyTourWithCreditPage.mustFillInMessageShouldNotBeVisible();
+    }
 
 
 }

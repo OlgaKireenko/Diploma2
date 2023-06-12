@@ -394,7 +394,7 @@ class BuyTourTest {
         buyTourPage.putMonth(DataHelper.generateMonth());
         buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.putCVV(DataHelper.getExtraLongCardNumber());
-        buyTourPage.shouldCompareCVV("value","444");
+        buyTourPage.shouldCompareCVV("value", "444");
     }
 
     @Test
@@ -410,6 +410,7 @@ class BuyTourTest {
         buyTourPage.wrongFormatMessage();
     }
 
+    ///баг
     @Test
     @DisplayName("Should be impossible to buy tour with Three zero in CVV field")
     void shouldBeImpossibleToBuyTourWithThreeZeroInCVVField() {
@@ -423,20 +424,17 @@ class BuyTourTest {
         buyTourPage.wrongFormatMessage();
     }
 
+    @Test
+    @DisplayName("Error underlines Should disappear after filing form")
+    void  ErrorUnderLinesShouldDisappear(){
+        var buyTourPage = new DashboardPage().clickButtonBuy();
+        buyTourPage.buyClick();
+        buyTourPage.makeSuccessPaymentByDebitCard();
+        buyTourPage.wrongFormatMessageShouldNotBeVisible();
+        buyTourPage.mustFillInMessageShouldNotBeVisible();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 }
 
 

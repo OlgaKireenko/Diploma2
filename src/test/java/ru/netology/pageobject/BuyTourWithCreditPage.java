@@ -2,6 +2,7 @@ package ru.netology.pageobject;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import ru.netology.data.DataHelper;
 
 import java.time.Duration;
 
@@ -66,7 +67,9 @@ public class BuyTourWithCreditPage {
     public void shouldCompareCardNumber(String attributeName, String expectedAttributeValue) {
         card.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
-
+    public void shouldCompareCVV(String attributeName, String expectedAttributeValue) {
+        cvv.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
+    }
 
     public void findSuccessContent() {
 
@@ -94,5 +97,25 @@ public class BuyTourWithCreditPage {
     public void findMustFillInMessage() {
         mustFillInMessage.shouldBe(visible);
     }
+
+    public void wrongFormatMessageShouldNotBeVisible() {
+        underLineMessage.shouldBe(visible);
+    }
+    public void mustFillInMessageShouldNotBeVisible() {
+        mustFillInMessage.shouldNotBe(visible);
+    }
+    public void makeSuccessPaymentByDebitCard() {
+        putCardNumber(DataHelper.getActiveCardNumber());
+        putOwner(DataHelper.generateFullName());
+        putMonth(DataHelper.generateMonth());
+        putYear(DataHelper.generateYear());
+        putCVV(DataHelper.generateCVV());
+        buyClick();
+    }
+
+
+
+
+
 }
 

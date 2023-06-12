@@ -57,6 +57,7 @@ public class BuyTourPage {
     public void shouldCompare(String attributeName, String expectedAttributeValue) {
         month.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
+
     public void shouldCompareYear(String attributeName, String expectedAttributeValue) {
         year.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
@@ -64,9 +65,11 @@ public class BuyTourPage {
     public void shouldCompareOwner(String attributeName, String expectedAttributeValue) {
         owner.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
+
     public void shouldCompareCardNumber(String attributeName, String expectedAttributeValue) {
         card.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
+
     public void shouldCompareCVV(String attributeName, String expectedAttributeValue) {
         cvv.shouldHave(Condition.attribute(attributeName, expectedAttributeValue));
     }
@@ -97,15 +100,23 @@ public class BuyTourPage {
         mustFillInMessage.shouldBe(visible);
     }
 
-
-    public void makeSuccessPaymentByDebitCard(){
-
+    public void wrongFormatMessageShouldNotBeVisible() {
+        underLineMessage.shouldBe(visible);
     }
 
-    public void makeSuccessPaymentWithCredit(){
-
+    public void mustFillInMessageShouldNotBeVisible() {
+        mustFillInMessage.shouldNotBe(visible);
     }
 
+
+    public void makeSuccessPaymentByDebitCard() {
+        putCardNumber(DataHelper.getActiveCardNumber());
+        putOwner(DataHelper.generateFullName());
+        putMonth(DataHelper.generateMonth());
+        putYear(DataHelper.generateYear());
+        putCVV(DataHelper.generateCVV());
+        buyClick();
+    }
 
 
 }

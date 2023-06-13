@@ -31,7 +31,7 @@ docker-compose ps
 ![image](https://github.com/OlgaKireenko/Diploma2/assets/80949699/605f2a4d-804b-4e24-84ac-93222e059e40)
 Ожидаемый статус контейнеров - UP
 
-- Запускаем SUT командой в терминале:
+- Запускаем SUT командой в терминале (по очереди, не одновременно):
 
 для MySQL:
 
@@ -42,9 +42,11 @@ java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aq
 java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
 
 - Запускаем авто-тесты командой в терминале:
+
 для MySQL:
 
 ./gradlew clean test "-Ddatasource.url=jdbc:mysql://localhost:3306/app"
+
 для PostgreSQL:
 
 ./gradlew clean test "-Ddatasource.url=jdbc:postgresql://localhost:5432/app"

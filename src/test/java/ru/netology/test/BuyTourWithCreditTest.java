@@ -306,7 +306,7 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.putCVV(DataHelper.generateCVV());
         buyTourWithCreditPage.putOwner(DataHelper.generateExtraLongFullName());
         buyTourWithCreditPage.buyClick();
-        buyTourWithCreditPage.shouldCompareOwner("value", "Ivaaaaaaaaaaaaaaaa");
+        buyTourWithCreditPage.shouldCompareOwner("value", "Ivaaaaaaaaaaaaaaaaaaaaaaaaan Ivaaaaa");
 
     }
 
@@ -397,7 +397,7 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.buyClick();
         buyTourWithCreditPage.wrongFormatMessage();
     }
-    
+
     //31
     @Test
     @DisplayName("Error underlines Should disappear after filing form")
@@ -408,6 +408,5 @@ public class BuyTourWithCreditTest {
         buyTourWithCreditPage.wrongFormatMessageShouldNotBeVisible();
         buyTourWithCreditPage.mustFillInMessageShouldNotBeVisible();
     }
-
 
 }

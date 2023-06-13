@@ -210,9 +210,7 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.findWrongCardMessage();
     }
-
     //15
-
     @Test
     @DisplayName("Should reject Buy Tour with wrong year")
     void shouldRejectBuyTourWithWrongYearPlus10Years() {
@@ -225,8 +223,6 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.findWrongCardMessage();
     }
-
-
     //16
     @Test
     @DisplayName("Should reject Buy Tour with wrong year")
@@ -240,7 +236,6 @@ class BuyTourTest {
         buyTourPage.buyClick();
         buyTourPage.findExpiredCardMessage();
     }
-
     //17
     @Test
     @DisplayName("Should be impossible to put three symbols in year field")
@@ -249,10 +244,9 @@ class BuyTourTest {
         buyTourPage.putYear(DataHelper.getTreeSymbols());
         buyTourPage.shouldCompareYear("value", "12");
     }
-
     //18
     @Test
-    @DisplayName("Should reject Buy Tour with wrong year")
+    @DisplayName("Should reject Buy Tour with one Symbol in year")
     void shouldBeImpossibleToBuyTourWithOneSymbolInYearField() {
         var buyTourPage = new DashboardPage().clickButtonBuy();
         buyTourPage.putCardNumber(DataHelper.getActiveCardNumber());
@@ -312,7 +306,6 @@ class BuyTourTest {
         buyTourPage.putYear(DataHelper.generateYear());
         buyTourPage.putMonth(DataHelper.generateMonth());
         buyTourPage.putCVV(DataHelper.generateCVV());
-        //buyTourPage.putOwner(DataHelper.generateFullName());
         buyTourPage.buyClick();
         buyTourPage.findMustFillInMessage();
 
@@ -327,10 +320,9 @@ class BuyTourTest {
         buyTourPage.putYear(DataHelper.generateYear());
         buyTourPage.putMonth(DataHelper.generateMonth());
         buyTourPage.putCVV(DataHelper.generateCVV());
-        buyTourPage.putOwner(DataHelper.getExtraLongCardNumber());
+        buyTourPage.putOwner(DataHelper.generateExtraLongFullName());
         buyTourPage.buyClick();
-        int len = 18; //to do: count length owner field
-        assertEquals(18, len);
+        buyTourPage.shouldCompareOwner("value","Ivaaaaaaaaaaaaaaaaaaaaaaaaan Ivaaaaa");
 
     }
 

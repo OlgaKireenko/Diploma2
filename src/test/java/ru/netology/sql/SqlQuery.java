@@ -22,8 +22,7 @@ public class SqlQuery {
     @SneakyThrows
     public static void clearDB() {
         var runner = new QueryRunner();
-        var deleteSQL = "DELETE FROM credit_request_entity;";
-
+        var deleteSQL = ("DELETE FROM credit_request_entity; DELETE FROM order_entity; DELETE FROM payment_entity;");
         try (var connection = getConnection()) {
             runner.execute(connection, deleteSQL);
         }

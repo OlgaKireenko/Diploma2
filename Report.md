@@ -19,32 +19,35 @@
 
 #### При подключении к СУБД MySQL
 
+![image](https://github.com/OlgaKireenko/Diploma2/assets/80949699/126f4a57-7155-40b0-bd29-0d4b4a5aa00d)
 
 
-* 14 - успешных, что составляет 48% 
-* 16 - не прошло, что составляет 52%
+
+
+* 24 - успешных
+* 7 - не прошло
 
 #### При подключении к СУБД PostgreSQL
 
+![image](https://github.com/OlgaKireenko/Diploma2/assets/80949699/18295f33-cbf0-4a4a-90e6-e3d0246ec835)
 
 
-* 14 - успешных, что составляет 48%
-* 16 - не прошло, что составляет 52%
+* 24 - успешных
+* 7 - не прошло
 
 ### Общие рекомендации
 
 #### По результатам тестирования необходимо:
 
 - Составить документацию для приложения;
-- Исправить найденные ошибки:
+- Исправить найденные ошибки
 
-1) 
-2) 
-3) 
-4) 
-5) 
-6) 
-7) 
-8) 
-9) 
-10) 
+1) [Кнопка <Купить> не подсвечивается красным #1](https://github.com/OlgaKireenko/Diploma2/issues/1)
+2) [Ограничение длины поля "Владелец" #2](https://github.com/OlgaKireenko/Diploma2/issues/2)
+3) [Оплата тура недействующей картой #3](https://github.com/OlgaKireenko/Diploma2/issues/3)
+4) [Кириллица в поле Владелец #4](https://github.com/OlgaKireenko/Diploma2/issues/4)
+5) [Спец символы в поле Владелец #5](https://github.com/OlgaKireenko/Diploma2/issues/5)
+6) [Покупка тура при невалидном значении поля CVV #6](https://github.com/OlgaKireenko/Diploma2/issues/6)
+7) [Подстрочные сообщение об ошибках после заполнения формы валидными значениями #7](https://github.com/OlgaKireenko/Diploma2/issues/7)
+8) [Текст подстрочных сообщений при не заполнении обязательного поля #8](https://github.com/OlgaKireenko/Diploma2/issues/1)
+
